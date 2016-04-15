@@ -1,0 +1,18 @@
+server {
+	listen 80;
+	root /var/www/letsencrypt;
+	location /.well-known {
+		try_files $uri /;
+	}
+	location / {
+		return 301 https://$host$request_uri;
+	}
+}
+server {
+	listen 443 ssl;
+	root /var/www/html;
+	ssl_certificate /etc/letsencrypt/live/<certname>/cert.pem;
+	ssl_certificate_key /etc/letsencrypt/live/<certname>/privkey.pem;
+
+  ...
+}
